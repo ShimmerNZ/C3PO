@@ -5,11 +5,10 @@
 
 #define CHANNEL 1
 #define LED_PIN     12
-#define NUM_LEDS    50
+#define NUM_LEDS    230
 #define BRIGHTNESS  96
 #define LED_TYPE    WS2812B
 #define COLOR_ORDER GRB
-
 CRGB leds[NUM_LEDS];
 
 enum Effect {LIGHTSABER_GLOW, HYPERSPACE_JUMP, DROID_SPEAK, GALAXY_TWINKLE, REACTOR_CORE, TIE_FIGHTER_DASH, HOLOGRAM_PROJECTION, KYBER_CRYSTAL_CHARGE, BATTLE_DAMAGE_FLICKER, FORCE_PRESENCE};
@@ -86,6 +85,8 @@ void setup() {
   FastLED.addLeds<LED_TYPE, LED_PIN, COLOR_ORDER>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
   FastLED.setBrightness(BRIGHTNESS);
   currentEffect = static_cast<Effect>(random(0, 10));
+  
+  Serial.print(currentEffect);
 }
 
 void loop() {
@@ -129,103 +130,128 @@ CRGB getRandomColor() {
 }
 
 void lightSaberGlow() {
-  unsigned long currentMillis = millis();
-  if (currentMillis - previousMillis >= interval) {
-    previousMillis = currentMillis;
-    fill_solid(leds, NUM_LEDS, getRandomColor());
+  for (int brightness = 0; brightness <= 255; brightness++) {
+    fill_solid(leds, NUM_LEDS, CRGB(brightness, 0, 0));
     FastLED.show();
-    interval = 500;
+    delay(5);
+  }
+  for (int brightness = 255; brightness >= 0; brightness--) {
+    fill_solid(leds, NUM_LEDS, CRGB(brightness, 0, 0));
+    FastLED.show();
+    delay(5);
   }
 }
 
 // Continue for other effects using millis() and getRandomColor()
 
 void hyperspaceJump() {
-  unsigned long currentMillis = millis();
-  if (currentMillis - previousMillis >= interval) {
-    previousMillis = currentMillis;
-    for (int i = 0; i < NUM_LEDS; i++) {
-      leds[i] = CRGB::White;
-    }
-    FastLED.show();
-    interval = 50;
-    for (int i = 0; i < NUM_LEDS; i++) {
-      leds[i] = CRGB::Blue;
-      FastLED.show();
-    }
-    interval = 50;
+static uint8_t startIndex = 0;
+  startIndex++;
+  uint8_t pos = startIndex;
+
+  for (int i = 0; i < NUM_LEDS; i++) {
+    leds[(pos + i) % NUM_LEDS] = CRGB::Black;
   }
+
+  leds[(pos + 34) % NUM_LEDS] = CRGB::White;
+
+  leds[(pos) % NUM_LEDS] = CRGB::Blue;
+  for (int i = 0; i < 34; i++) {
+    leds[(pos + i) % NUM_LEDS] = CRGB(0, 0, max(0 + (i * 7), 0)); // Bright blue fading to black
+  }
+
+  // Random sparkle
+  for (int i = 0; i < random(1, 3); i++) {
+    leds[random(NUM_LEDS)] = CRGB::White;
+  }
+  
+  FastLED.show();
+  //delay(5);  // Faster speed
 }
 
 void droidSpeak() {
-  unsigned long currentMillis = millis();
-  if (currentMillis - previousMillis >= interval) {
-    previousMillis = currentMillis;
-    for (int i = 0; i < NUM_LEDS; i++) {
-      leds[i] = getRandomColor();
-    }
+ for (int brightness = 0; brightness <= 255; brightness++) {
+    fill_solid(leds, NUM_LEDS, CRGB(0, 0, brightness)); // Blue
     FastLED.show();
-    interval = 100;
-    FastLED.clear();
+    
+  }
+   for (int brightness = 255; brightness >= 0; brightness--) {
+    fill_solid(leds, NUM_LEDS, CRGB(0, 0, brightness)); // Blue
+    FastLED.show();
+    
+  }
+  for (int brightness = 0; brightness <= 255; brightness++) {
+    fill_solid(leds, NUM_LEDS, CRGB(brightness, 0, 0)); // Red
+    FastLED.show();
+    
+  }
+  for (int brightness = 255; brightness >= 0; brightness--) {
+    fill_solid(leds, NUM_LEDS, CRGB(brightness, 0, 0)); // Red
+    FastLED.show();
+    
   }
 }
 
 // Continue for other effects...
 
 void galaxyTwinkle() {
-  unsigned long currentMillis = millis();
-  if (currentMillis - previousMillis >= interval) {
-    previousMillis = currentMillis;
-    for (int i = 0; i < NUM_LEDS; i++) {
-      leds[i] = CRGB::Black;
-    }
-    for (int i = 0; i < NUM_LEDS / 2; i++) {
-      leds[random(NUM_LEDS)] = CRGB::White;
-    }
+for (int i = 0; i < NUM_LEDS; i++) {
+    leds[random(NUM_LEDS)] = CRGB::Green;
     FastLED.show();
-    interval = 500;
-    FastLED.clear();
+    delay(5);
+    leds[random(NUM_LEDS)] = CRGB::Black;
+  
   }
 }
 
 void reactorCore() {
-  unsigned long currentMillis = millis();
-  if (currentMillis - previousMillis >= interval) {
-    previousMillis = currentMillis;
-    fill_solid(leds, NUM_LEDS, CRGB::Orange);
+  for (int i = 0; i < 230; i++) {
+    leds[i] = CRGB::Black; // Start with all LEDs off
+  }
+  
+  for (int brightness = 0; brightness <= 255; brightness++) {
+    int pos = 115 + (int)(114.5 * sin(millis() / 1000.0 * PI));
+    for (int i = 0; i < 5; i++) {
+      leds[(pos + i) % NUM_LEDS] = CRGB(0, 0, brightness); // Bright blue core block
+    }
     FastLED.show();
-    interval = 500;
-    fill_solid(leds, NUM_LEDS, CRGB::White);
+    delay(10);
+    for (int i = 0; i < 5; i++) {
+      leds[(pos + i) % NUM_LEDS] = CRGB::Black; // Reset LEDs to off
+    }
+  }
+  for (int brightness = 255; brightness >= 0; brightness--) {
+    int pos = 115 + (int)(114.5 * sin(millis() / 1000.0 * PI));
+    for (int i = 0; i < 5; i++) {
+      leds[(pos + i) % NUM_LEDS] = CRGB(0, 0, brightness); // Fade out
+    }
     FastLED.show();
+    delay(10);
+    for (int i = 0; i < 5; i++) {
+      leds[(pos + i) % NUM_LEDS] = CRGB::Black; // Reset LEDs to off
+    }
   }
 }
 
 // Other functions follow the same structure.
 
 void tieFighterDash() {
-  unsigned long currentMillis = millis();
-  if (currentMillis - previousMillis >= interval) {
-    previousMillis = currentMillis;
-    fill_solid(leds, NUM_LEDS, CRGB::Black);
-    for (int i = 0; i < NUM_LEDS; i++) {
-      leds[i] = CRGB::White;
-      FastLED.show();
-      interval = 50;
-      leds[i] = CRGB::Black;
-    }
+  static uint8_t hue = 0;
+  for (int i = 0; i < NUM_LEDS; i++) {
+    leds[i] = CHSV((hue + i * 256 / NUM_LEDS) % 256, 255, 255);
   }
+  hue++;
+  FastLED.show();
+  delay(20);  // Adjust for speed
 }
 
 void hologramProjection() {
-  unsigned long currentMillis = millis();
-  if (currentMillis - previousMillis >= interval) {
-    previousMillis = currentMillis;
-    fill_solid(leds, NUM_LEDS, CRGB::LightBlue);
-    FastLED.show();
-    interval = 100;
-    fill_solid(leds, NUM_LEDS, CRGB::DarkBlue);
-    FastLED.show();
+  static uint8_t hue = 0;
+  for (int i = 0; i < NUM_LEDS; i++) {
+    leds[i] = CHSV((hue + i * 256 / NUM_LEDS) % 256, 255, 255);
   }
+  hue++;
+  FastLED.show();
 }
 
 void kyberCrystalCharge() {
@@ -259,16 +285,11 @@ void battleDamageFlicker() {
 }
 
 void forcePresence() {
-  unsigned long currentMillis = millis();
-  if (currentMillis - previousMillis >= interval) {
-    previousMillis = currentMillis;
-    for (int i = 0; i < NUM_LEDS; i++) {
-      leds[i] = CRGB::Blue;
-      FastLED.show();
-      interval = 1000;
-      leds[i] = CRGB::Green;
-      FastLED.show();
-      interval = 1000;
-    }
-  }
+  CRGB colorSequence[] = {CRGB::Blue, CRGB::Purple, CRGB::Red, CRGB::Orange, CRGB::Yellow, CRGB::Green, CRGB::White};
+  static int colorIndex = 0;
+  fill_solid(leds, NUM_LEDS, colorSequence[colorIndex]);
+  FastLED.show();
+  colorIndex = (colorIndex + 1) % (sizeof(colorSequence) / sizeof(CRGB));
+  delay(100);  // Adjust speed for pulsing
 }
+

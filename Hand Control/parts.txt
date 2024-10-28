@@ -1,0 +1,14 @@
+esp32 dev board
+https://www.aliexpress.com/item/1005005988314674.html?spm=a2g0o.order_list.order_list_main.61.3e571802UPBBhw
+
+On/Off Switch
+https://www.aliexpress.com/item/32877248086.html?spm=a2g0o.order_list.order_list_main.247.3e571802UPBBhw
+
+16mm momentary switch
+https://www.aliexpress.com/item/1005007194584944.html?spm=a2g0o.productlist.main.7.20611d18GCL7gB&algo_pvid=8143853c-2cc6-4658-8b9e-94f432e79c21&aem_p4p_detail=20241027233954880092897153840000295253&algo_exp_id=8143853c-2cc6-4658-8b9e-94f432e79c21-3&pdp_npi=4%40dis%21NZD%212.52%212.52%21%21%2110.53%2110.53%21%40210318e817300975940208035e159a%2112000039762522716%21sea%21NZ%21719437034%21X&curPageLogUid=5kBOyNdGEiS8&utparam-url=scene%3Asearch%7Cquery_from%3A&search_p4p_id=20241027233954880092897153840000295253_1#nav-description
+
+Lipo 1S
+https://www.aliexpress.com/item/1005005502510398.html?spm=a2g0o.detail.pcDetailBottomMoreOtherSeller.6.7072XFhNXFhNn8&gps-id=pcDetailBottomMoreOtherSeller&scm=1007.40050.354490.0&scm_id=1007.40050.354490.0&scm-url=1007.40050.354490.0&pvid=f9114587-2d2a-41dd-af30-ccbf781c3d37&_t=gps-id:pcDetailBottomMoreOtherSeller,scm-url:1007.40050.354490.0,pvid:f9114587-2d2a-41dd-af30-ccbf781c3d37,tpp_buckets:668%232846%238109%231935&pdp_npi=4%40dis%21NZD%2112.28%217.85%21%21%217.19%214.60%21%402103273e17300979230605899e2241%2112000033332599610%21rec%21NZ%21719437034%21X&utparam-url=scene%3ApcDetailBottomMoreOtherSeller%7Cquery_from%3A
+
+Charger DC DC step up board
+https://www.aliexpress.com/item/1005001621886140.html?spm=a2g0o.order_list.order_list_main.795.7bf11802rUOIK2

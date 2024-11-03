@@ -44,7 +44,7 @@ void OnDataRecv(const uint8_t *mac_addr, const uint8_t *data, int data_len) {
   Serial.print("Last Packet Recv from: "); Serial.println(macStr);
   //Serial.print("Last Packet Recv Data: "); Serial.println(*data);
     eventTrigger = true;
-    delay(1500);
+    delay(1100);
     BottangoCore::commandStreamProvider.startCommandStream(0, false);
 }
 

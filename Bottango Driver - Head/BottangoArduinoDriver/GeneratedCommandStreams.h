@@ -14,7 +14,7 @@ namespace GeneratedCommandStreams
     extern CommandStream setupStream;
     extern CommandStream stream_DefaultPose;
     extern CommandStream stream_DefaultPose_loop;
-    extern bool eventTrigger;
+
 } // namespace GeneratedCommandStreams
 
 #endif

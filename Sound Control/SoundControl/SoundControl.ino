@@ -186,7 +186,7 @@ void droidSpeak() {
     
   }
   for (int brightness = 255; brightness >= 0; brightness--) {
-    fill_solid(leds, NUM_LEDS, CRGB(brightness, 0, 0)); // Red
+    fill_solid(leds, NUM_LEDS, CRGB(brightness, 0, 0)); // Red`
     FastLED.show();
     
   }
